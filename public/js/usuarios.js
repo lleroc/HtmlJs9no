@@ -49,3 +49,12 @@ var guardaryEditar = () => {
         }
     });
 }
+
+
+var limpiaCajas = () =>{
+    $('#nombre').val('');
+    document.getElementById('usuario').value='';
+    $('#email').val('');
+    $('#password').val('');
+    $('#ModalUsuarios').modal('hide');
+}
