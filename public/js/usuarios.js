@@ -6,16 +6,44 @@ $().ready(() => {
 var cargatabla = () => {
     var html = "";
     $.get(url, (usuarios) => {
-    
+
         $.each(usuarios, (index, val) => {
             html += "<tr>" + "<td>" + (
                 index + 1
-            ) + "</td>" + "<td>" + val.nombre + "</td>" + "<td>" + val.usuario + "</td>" + "<td>" + val.email + "</td>" + "<td>" + "<button class='btn btn-success' onclick=uno('" + val._id + "')>Editar</button>" + "<button class='btn btn-danger'>Eliminar</button>" + "</td>" + "</tr>";
+            ) + "</td>" + "<td>" + val.nombre + "</td>" + "<td>" + val.usuario + "</td>" + "<td>" + val.email + "</td>" + "<td>" + "<button class='btn btn-success' onclick=uno('" + val._id + "')>Editar</button>" + "<button class='btn btn-danger' onclick=eliminar('" + val._id + "')>Eliminar</button>" + "</td>" + "</tr>";
         });
         $('#cuerpoUsuarios').html(html);
     });
 }
 
+var eliminar = (id) => {
+    Swal.fire({
+        title: 'Usuarios',
+        text: "Esta seguro de eliminar al usuario!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Eliminar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: url + '/' + id,
+                type: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                success:(mensaje)=>{
+                   cargatabla();
+                   limpiaCajas();
+                    Swal.fire('Usuarios',  mensaje.msg, 'success')
+                }
+
+            });
+            
+        }
+    })
+}
 var guardaryEditar = () => {
     var nombre = document.getElementById('nombre').value;
     var usuario = document.getElementById('usuario').value;
@@ -31,7 +59,7 @@ var guardaryEditar = () => {
             email: email,
             password: password
         }
-        url = url +"/" + id;
+        url = url + "/" + id;
     } else { // TODO:Nuevo usuario
         var tipoEnvio = "POST";
         var UsuarioDTO = {
@@ -66,7 +94,7 @@ var guardaryEditar = () => {
 
 var uno = (id) => {
     $.get(url + "/" + id, (unUsuario) => {
-     
+
         if (unUsuario) {
             $('#_id').val(id);
             $('#nombre').val(unUsuario.nombre);
@@ -81,6 +109,7 @@ var uno = (id) => {
         }
     })
 }
+
 
 var limpiaCajas = () => {
     $('#_id').val('');
