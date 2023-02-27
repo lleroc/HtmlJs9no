@@ -16,78 +16,100 @@
     <div class="container">
       <div class="row">
         <!--TODO:Llamar Boton con modal-->
-        <button type="button" class="btn btn-primary" 
-        data-bs-toggle="modal" 
-        data-bs-target="#ModalUsuarios">
-            Nuevo Usuario
-          </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#ModalUsuarios"
+        >
+          Nuevo Usuario
+        </button>
 
-
-
-
-
-
-<!--TODO: Tabla usuarios-->
-
+        <!--TODO: Tabla usuarios-->
 
         <table class="table table-bordered table-striped">
-            <thead class="table-dark">
-                <tr >
-                    <th>#</th>
-                    <th>Nombre</th>
-                    <th>Usuario</th>
-                    <th>Email</th>
-                    <th>Opciones</th>
-                  </tr>
-            </thead>
-         <tbody id="cuerpoUsuarios">
-        
-         </tbody>
+          <thead class="table-dark">
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Usuario</th>
+              <th>Email</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpoUsuarios"></tbody>
         </table>
       </div>
     </div>
 
-
-
-<!--TODO: Modal -->
-<div class="modal fade" id="ModalUsuarios" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="idModal">Nuevo Usuario</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <label for="Nombre" class="col-form-label">Nombre</label>
-            <input type="text" name="nombre" id="nombre" class="form-control">
+    <!--TODO: Modal -->
+    <div
+      class="modal fade"
+      id="ModalUsuarios"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="idModal">Nuevo Usuario</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
-          <div class="row">
-            <label for="Nombre" class="col-form-label">Usuario</label>
-            <input type="text" name="usuario" id="usuario" class="form-control">
+          <div class="modal-body">
+            <input type="hidden" name="_id" />
+            <div class="row">
+              <label for="Nombre" class="col-form-label">Nombre</label>
+              <input
+                type="text"
+                name="nombre"
+                id="nombre"
+                class="form-control"
+              />
+            </div>
+            <div class="row">
+              <label for="Nombre" class="col-form-label">Usuario</label>
+              <input
+                type="text"
+                name="usuario"
+                id="usuario"
+                class="form-control"
+              />
+            </div>
+            <div class="row">
+              <label for="Nombre" class="col-form-label">Email</label>
+              <input type="text" name="email" id="email" class="form-control" />
+            </div>
+            <div class="row">
+              <label for="Nombre" class="col-form-label">Contraseña</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                class="form-control"
+              />
+            </div>
           </div>
-          <div class="row">
-            <label for="Nombre" class="col-form-label">Email</label>
-            <input type="text" name="email" id="email" class="form-control">
-          </div>
-          <div class="row">
-            <label for="Nombre" class="col-form-label">Contraseña</label>
-            <input type="password" name="password" id="password" class="form-control">
-          </div>
-        </div>
-        <div class="modal-footer">
+          <div class="modal-footer">
             <button type="button" class="btn btn-primary">Guardar</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-
-
-  <!--TODO:script-->
-
+    <!--TODO:script-->
 
     <script
       src="https://code.jquery.com/jquery-3.6.3.js"
