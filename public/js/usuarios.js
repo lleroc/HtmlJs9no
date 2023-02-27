@@ -1,4 +1,4 @@
-const url = "http://localhost:3000/api/v1/usuarios";
+var url = "http://localhost:3000/api/v1/usuarios";
 
 $().ready(() => {
     cargatabla();
@@ -6,10 +6,11 @@ $().ready(() => {
 var cargatabla = () => {
     var html = "";
     $.get(url, (usuarios) => {
+    
         $.each(usuarios, (index, val) => {
             html += "<tr>" + "<td>" + (
                 index + 1
-            ) + "</td>" + "<td>" + val.nombre + "</td>" + "<td>" + val.usuario + "</td>" + "<td>" + val.email + "</td>" + "<td>" + "<button class='btn btn-success'>Editar</button>" + "<button class='btn btn-danger'>Eliminar</button>" + "</td>" + "</tr>";
+            ) + "</td>" + "<td>" + val.nombre + "</td>" + "<td>" + val.usuario + "</td>" + "<td>" + val.email + "</td>" + "<td>" + "<button class='btn btn-success' onclick=uno('" + val._id + "')>Editar</button>" + "<button class='btn btn-danger'>Eliminar</button>" + "</td>" + "</tr>";
         });
         $('#cuerpoUsuarios').html(html);
     });
@@ -20,28 +21,41 @@ var guardaryEditar = () => {
     var usuario = document.getElementById('usuario').value;
     var email = $('#email').val();
     var password = $('#password').val();
-    var tipoEnvio = "POST";
-    var UsuarioDTO = {
-        nombre: nombre,
-        usuario: usuario,
-        email: email,
-        password: password
+    var id = document.getElementById('_id').value;
+    if (id != '') { // TODO:Editar Usuario
+        var tipoEnvio = "PUT";
+        var UsuarioDTO = {
+            _id: id,
+            nombre: nombre,
+            usuario: usuario,
+            email: email,
+            password: password
+        }
+        url = url +"/" + id;
+    } else { // TODO:Nuevo usuario
+        var tipoEnvio = "POST";
+        var UsuarioDTO = {
+            nombre: nombre,
+            usuario: usuario,
+            email: email,
+            password: password
+        }
     }
     $.ajax({
-        url:url,
-        type:tipoEnvio,
-        data:JSON.stringify(UsuarioDTO),
-        processData:false,
-        cache:false,
-        headers:{
-            "Content-Type":"application/json"
+        url: url,
+        type: tipoEnvio,
+        data: JSON.stringify(UsuarioDTO),
+        processData: false,
+        cache: false,
+        headers: {
+            "Content-Type": "application/json"
         },
-        success:(IUsuario)=>{
-            if(IUsuario){
+        success: (IUsuario) => {
+            if (IUsuario) {
                 alert('Se guardo con exito');
                 cargatabla();
                 limpiaCajas();
-            }else{
+            } else {
                 console.log(IUsuario);
                 alert('error al guardar');
                 limpiaCajas();
@@ -50,10 +64,28 @@ var guardaryEditar = () => {
     });
 }
 
+var uno = (id) => {
+    $.get(url + "/" + id, (unUsuario) => {
+     
+        if (unUsuario) {
+            $('#_id').val(id);
+            $('#nombre').val(unUsuario.nombre);
+            document.getElementById('usuario').value = unUsuario.usuario;
+            $('#email').val(unUsuario.email);
+            $('#password').val(unUsuario.password);
+            $('#idModal').html('Editar Usuario')
+            $('#ModalUsuarios').modal('show');
+        } else {
+            alert('error, no se encuentra al usuario');
+            console.log(unUsuario);
+        }
+    })
+}
 
-var limpiaCajas = () =>{
+var limpiaCajas = () => {
+    $('#_id').val('');
     $('#nombre').val('');
-    document.getElementById('usuario').value='';
+    document.getElementById('usuario').value = '';
     $('#email').val('');
     $('#password').val('');
     $('#ModalUsuarios').modal('hide');
